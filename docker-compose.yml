@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  polis-participation:
+    container_name: polis-participation
+    build: .
+    volumes:
+      - .:/code
+    ports:
+      - 5001:5001
+    external_links:
+      - polisserver_default
+    networks:
+      - default
+      - polisserver_default
+
+networks:
+  polisserver_default:
+    external: true
+  
+
+
+

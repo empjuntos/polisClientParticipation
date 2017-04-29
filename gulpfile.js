@@ -65,13 +65,6 @@ var prodMode = false;
 var host;
 var MINIFY_PREPROD = false;
 
-function showDesktopNotification(title, body) {
-  var child = spawn("osascript", ["-e", 'display notification "'+body+'" with title "'+title+'"'], {cwd: process.cwd()}),
-            stdout = '',
-            stderr = '';
-}
-
-
 function prepPathForTemplate(path) {
   // add slash at front if missing
   if (path.match(/^[^\/]/)) {
@@ -81,11 +74,16 @@ function prepPathForTemplate(path) {
   return path;
 }
 
+//TODO fix connect task being called twice
+a = 0;
 gulp.task('connect', [], function() {
+  if(a == 1){return};
+  a = 1;
 
   function proxyToPreprod(req, response) {
-    var x = request("https://preprod.pol.is" + req.originalUrl);
+    var x = request("http://polis-server:5000" + req.originalUrl);
     x.on("error", function(err) {
+      console.log(err);
       response.status(500).end();
     });
     req.pipe(x);
@@ -159,7 +157,7 @@ gulp.task('connect', [], function() {
   app.use(/^\/try$/, express.static(path.join(destRootBase, "try.html")));
 
   app.listen(5001);
-  console.log('localhost:5001');
+  console.log('localhost:8000');
 });
 
 function getGitHash() {
@@ -536,7 +534,6 @@ gulp.task('common', [
   "index",
   "embedJs",
   ], function() {
-    showDesktopNotification("BUILD UPDATED", "woohoo");
 });
 
 gulp.task('dev', [
@@ -572,7 +569,6 @@ gulp.task("watchForDev", [
       "polisStatic/**",
     ], function(e) {
       console.log("watch saw: " + e.path + " " + e.type);
-      gulp.run("dev");
     });
 });
 

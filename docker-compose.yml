@@ -5,7 +5,7 @@ services:
     container_name: polis-participation
     build: .
     volumes:
-      - .:/code
+      - .:/polisClientParticipation
     ports:
       - 5001:5001
     external_links:

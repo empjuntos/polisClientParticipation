@@ -1,15 +1,14 @@
-FROM node:0.12.7
+FROM node:6.2.0
 EXPOSE 5001
 
 # Create app directory
-ADD . /code
-WORKDIR /code
+ADD . /polisClientParticipation
+WORKDIR /polisClientParticipation
 
+RUN git config --global url."https://".insteadOf git://
 RUN npm install bower -g --allow-root
 RUN npm install gulp -g 
+RUN npm install
+RUN bower install --allow-root
 
-#RUN npm install
-
-CMD ["sleep", "infinity"]
-#CMD ["npm", "start"]
-
+CMD npm install; gulp default; sleep infinity

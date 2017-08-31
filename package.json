@@ -63,8 +63,8 @@
     "gulp-tap": "~0.1.1",
     "gulp-compile-handlebars": "~0.2.0",
     "gulp-markdown": "~0.1.2",
-    "node-sass": "~0.9.3",
-    "gulp-sass": "~0.7.2"
+    "node-sass": "2.0.0",
+    "gulp-sass": "2.3.0"
   },
   "scripts": {
     "start": "node ./node_modules/.bin/grunt",

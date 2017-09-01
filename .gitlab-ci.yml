@@ -1,15 +1,17 @@
 ---
-image: docker:17.04-git
+image: docker:latest
 services:
-- docker:17.04-dind
+- docker:dind
 stages:
 - build
+- deploy
 
 variables:
   RELEASE_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
 
 before_script:
   - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+
 
 build to production:
   stage: build
@@ -28,3 +30,9 @@ build to production:
   environment: production
   tags:
     - docker
+
+deploy to production:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --environment Production --stack polis-dev --service polis-client --new-image $RELEASE_IMAGE --no-finish-upgrade

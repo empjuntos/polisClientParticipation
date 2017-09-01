@@ -18,6 +18,7 @@
   "resolutions": {
     "underscore": "1.6.0",
     "handlebars": "1.1.2",
-    "backbone": "polis"
+    "backbone": "polis",
+    "d3": "^3.5.5"
   }
 }

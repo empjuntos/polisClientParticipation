@@ -18,7 +18,7 @@ build to production:
     - docker run -u node --rm --workdir=/app -v $PWD:/app node ./node_modules/bower/bin/bower install
     - docker run -u node --rm --workdir=/app -v $PWD:/app node ./node_modules/gulp-cli/bin/gulp.js dist
     - docker create --name polisclientparticipation nginx
-    - docker cp -a $PWD/. polisclientparticipation:/usr/share/nginx/html
+    - docker cp --archive $PWD/. polisclientparticipation:/usr/share/nginx/html
     - docker commit polisclientparticipation $RELEASE_IMAGE
     - docker tag $RELEASE_IMAGE "$CI_REGISTRY_IMAGE:latest"
     - docker push $RELEASE_IMAGE

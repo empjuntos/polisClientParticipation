@@ -1,0 +1,30 @@
+---
+image: docker:17.04-git
+services:
+- docker:17.04-dind
+stages:
+- build
+
+variables:
+  RELEASE_IMAGE: $CI_REGISTRY_IMAGE/node:$CI_BUILD_REF_NAME
+
+before_script:
+  - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+
+build to production:
+  stage: build
+  script:
+    - docker run -u node --rm --workdir=/app -v $PWD:/app node yarn install
+    - docker run -u node --rm --workdir=/app -v $PWD:/app node ./node_modules/bower/bin/bower install
+    - docker run -u node --rm --workdir=/app -v $PWD:/app node ./node_modules/gulp-cli/bin/gulp.js dist
+    - docker create --name polisclientparticipation nginx
+    - docker cp -a $PWD/. polisclientparticipation:/usr/share/nginx/html
+    - docker commit polisclientparticipation $RELEASE_IMAGE
+    - docker tag $RELEASE_IMAGE "$CI_REGISTRY_IMAGE:latest"
+    - docker push $RELEASE_IMAGE
+    - docker push "$CI_REGISTRY_IMAGE:latest"
+  only:
+    - /master|develop/
+  environment: production
+  tags:
+    - docker

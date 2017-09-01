@@ -36,3 +36,8 @@ deploy to production:
   image: cdrx/rancher-gitlab-deploy
   script:
     - upgrade --environment Production --stack polis-dev --service polis-client --new-image $RELEASE_IMAGE --no-finish-upgrade
+  only:
+    - /master|develop/
+  environment: production
+  tags:
+    - docker

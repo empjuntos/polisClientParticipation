@@ -14,7 +14,6 @@ var connect = require('gulp-connect');
 var tap = require('gulp-tap');
 var clean = require('gulp-clean');
 var jshint = require('gulp-jshint');
-var gzip = require('gulp-gzip');
 var template = require('gulp-template');
 var watch = require('gulp-watch');
 var path = require('path');
@@ -380,8 +379,6 @@ gulp.task('scriptsVis2', ['jshint'], function() {
 
   return gulp.src('./vis2/vis2.js')
     .pipe(webpackStream(configProd))
-    .pipe(gzip())
-    .pipe(renameToRemoveGzExtention())
     .pipe(gulp.dest(destRoot() + "/js"));
 });
 
@@ -500,9 +497,6 @@ gulp.task('scripts', ['templates', 'jshint'], function() {
       if (prodMode || (preprodMode && minified)) {
         s = s.pipe(uglify());
       }
-      if (!devMode) {
-        s = s.pipe(gzip());
-      }
       s = s.pipe(rename('polis.js'));
       return s.pipe(gulp.dest(destRoot() + "/js"));
 });
@@ -536,8 +530,6 @@ gulp.task("scriptsOther", function() {
   if (!devMode) {
     s = s
       .pipe(uglify())
-      .pipe(gzip())
-      .pipe(renameToRemoveGzExtention());
   }
   return s.pipe(gulp.dest(destRoot() + "/js"));
 });
@@ -550,7 +542,6 @@ gulp.task("scriptsTemp", function() {
   if (!devMode) {
     s = s
       .pipe(uglify())
-      .pipe(gzip())
       .pipe(renameToRemoveGzExtention());
   }
   return s.pipe(gulp.dest(destRoot() + "/js"));
@@ -750,7 +741,7 @@ function deploy(params) {
         delay: 1000,
         headers: {
           'x-amz-acl': 'public-read',
-          'Content-Encoding': 'gzip',
+          //'Content-Encoding': 'gzip',
           'Cache-Control': 'no-transform,public,max-age=MAX_AGE,s-maxage=MAX_AGE'.replace(/MAX_AGE/g, cacheSecondsForContentWithCacheBuster),
         },
         makeUploadPath: makeUploadPathFactory("cached_gzipped_"+cacheSecondsForContentWithCacheBuster),
@@ -838,7 +829,7 @@ function deploy(params) {
         delay: 1000,
         headers: {
           'x-amz-acl': 'public-read',
-          'Content-Encoding': 'gzip',
+          //'Content-Encoding': 'gzip',
           'Cache-Control': 'no-cache'.replace(/MAX_AGE/g, twitterAuthReturnCacheSeconds),
         },
         makeUploadPath: function(file) {

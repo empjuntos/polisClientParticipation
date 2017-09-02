@@ -11,4 +11,4 @@ RUN npm install gulp -g
 RUN npm install
 RUN bower install --allow-root
 
-CMD npm install; gulp default; sleep infinity
+CMD ./start.sh

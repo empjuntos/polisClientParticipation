@@ -5,6 +5,9 @@ EXPOSE 5001
 ADD . /polisClientParticipation
 WORKDIR /polisClientParticipation
 
+COPY package.json ./
+COPY bower.json ./
+
 RUN git config --global url."https://".insteadOf git://
 RUN npm install bower -g --allow-root
 RUN npm install gulp@3.8 -g 

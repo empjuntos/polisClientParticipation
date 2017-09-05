@@ -4,7 +4,7 @@
     <meta name="globalsign-domain-verification" content="Dp-UFZfqPtVw6GK7XwmqFPmgjnUyTmU7xNGwpMnr-K" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Polis</title>
+    <title><%= site_name %></title>
 
     <!-- REPLACE_THIS_WITH_FB_META_TAGS -->
 
@@ -249,16 +249,14 @@ ajaxGet("/api/v3/participationInit" + qp,
 //     };
 //   }
 // }
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+  ga('create', '<%= google-analytics-ua =%>', 'auto');
+  ga('send', 'pageview');
 
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-49459311-1', 'pol.is');
-      ga('require', 'displayfeatures');
-      ga('send', 'pageview');
 </script>
 
 
@@ -298,24 +296,11 @@ if (<%= useIntercom %>) {
   </head>
   <body class="clickDeselectsHull" style="margin:0; background-color: white;">
 
-
-<!-- <div id="fb-root"></div> -->
-<script>
-// (function(d, s, id) {
-//   var js, fjs = d.getElementsByTagName(s)[0];
-//   if (d.getElementById(id)) return;
-//   js = d.createElement(s); js.id = id;
-//   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=661042417336977&version=v2.0";
-//   fjs.parentNode.insertBefore(js, fjs);
-// }(document, 'script', 'facebook-jssdk'));
-</script>
-
-
 <div id="fb-root"></div>
 <script>
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '661042417336977',
+      appId      : '<%= facebook-app-id =%>',
       xfbml      : true,
       version    : 'v2.1'
     });
@@ -361,7 +346,10 @@ if (<%= useIntercom %>) {
     document.getElementById("mainSpinner").classList.add("hidden");
   }
 </script>
-<script>window.version = "<%= versionString %>";</script>
+  <script>
+    window.version = "<%= versionString %>";
+    window.base_url = "<%= base_server_url %>";
+  </script>
 
 
 </body>

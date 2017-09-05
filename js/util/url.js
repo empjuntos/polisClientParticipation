@@ -42,6 +42,10 @@ for (var i = 0; i < httpsWhitelist.length; i++) {
   }
 }
 
+// If a 'base_url' have been defined in the window by gulp, use it instead of the regular urlPrefix resolution
+if (window.base_url !== '' && window.base_url !== undefined)
+  urlPrefix = window.base_url;
+
 function isPreprod() {
   return urlPrefix === preprod;
 }
@@ -55,7 +59,3 @@ module.exports = {
   isPreprod: isPreprod,
   isLocalhost: isLocalhost
 };
-
-// If a 'base_url' have been setted in the window by gulp, use it instead of the regular urlPrefix resolution
-if (window.base_url !== '' && window.base_url !== undefined)
-  urlPrefix = window.base_url;

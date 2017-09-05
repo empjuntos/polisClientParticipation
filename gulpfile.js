@@ -240,24 +240,23 @@ gulp.task('index', [
 ], function() {
   var s = gulp.src('index.html');
   var basepath = prepPathForTemplate(destRootRest);
+  var basepath_visbundle = basepath;
+  var d3Filename = 'd3.min.js',
   if (devMode) {
-    s = s.pipe(template({
-      basepath: basepath,
-      basepath_visbundle: basepath_visbundle_dev,
-      d3Filename: 'd3.js',
-      useIntercom: !isTrue(process.env.DISABLE_INTERCOM),
-      versionString: versionString,
-    }));
-  } else {
-    s = s.pipe(template({
-      //basepath: 'https://s3.amazonaws.com/pol.is',
-      basepath: basepath, // proxy through server (cached by cloudflare, and easier than choosing a bucket for preprod, etc)
-      basepath_visbundle: basepath,
-      d3Filename: 'd3.min.js',
-      useIntercom: !isTrue(process.env.DISABLE_INTERCOM),
-      versionString: versionString,
-    }));
+    d3Filename = 'd3.js';
+    basepath_visbundle = basepath_visbundle_dev,
   }
+  s = s.pipe(template({
+    basepath: basepath, // proxy through server (cached by cloudflare, and easier than choosing a bucket for preprod, etc)
+    basepath_visbundle: basepath_visbundle,
+    d3Filename: d3Filename,
+    useIntercom: !isTrue(process.env.DISABLE_INTERCOM),
+    versionString: versionString,
+    facebook-app-id: process.env.FACEBOOK_APP_ID,
+    google-analytics-ua: process.env.GOOGLE_ANALYTICS_UA,
+    base_server_url: process.env.BASE_SERVER_URL,
+    site_name: process.env.SITE_NAME,
+  }));
   return s.pipe(gulp.dest(destRootBase));
 });
 
@@ -889,4 +888,3 @@ gulp.task('default', [
 
 var tasks = process.argv.slice(2);
 gulp.start.apply(gulp, tasks);
-

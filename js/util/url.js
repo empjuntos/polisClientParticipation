@@ -2,9 +2,17 @@
 
 // build may prepend 'devWithPreprod'
 
-var prod = "https://pol.is/";
-var preprod = "https://preprod.pol.is/";
-var embed = "https://embed.pol.is/";
+// FIXME: This URLs should be setted by gulp at build time
+// var prod = "https://pol.is/";
+// var preprod = "https://preprod.pol.is/";
+// var embed = "https://embed.pol.is/";
+// var survey = "https://survey.pol.is/";
+// var localhost = "http://localhost:5000/";
+// var localhost8000 = "http://localhost:8000/";
+
+var prod = "https://polis.brasilqueopovoquer.org.br/";
+var preprod = "https://devpolis.brasilqueopovoquer.org.br/";
+var embed = "https://polis.brasilqueopovoquer.org.br/";
 var survey = "https://survey.pol.is/";
 var localhost = "http://localhost:5000/";
 var localhost8000 = "http://localhost:8000/";
@@ -14,7 +22,7 @@ var httpsWhitelist = [
 ];
 
 var urlPrefix = prod;
-if (document.domain.indexOf("preprod") >= 0) {
+if (document.domain.indexOf("devpolis") >= 0) {
   urlPrefix = preprod;
 }
 if (document.domain.indexOf("embed") >= 0) {
@@ -23,7 +31,12 @@ if (document.domain.indexOf("embed") >= 0) {
 if (document.domain.indexOf("survey") >= 0) {
   urlPrefix = survey;
 }
-if ((-1 === document.domain.indexOf("pol.is")) && (-1 === document.domain.indexOf("polis.io"))) {
+// FIXME: the following line stops anyone besides pol.is from using polisClientParticipation
+// if ((-1 === document.domain.indexOf("pol.is")) && (-1 === document.domain.indexOf("polis.io"))) {
+//   urlPrefix = localhost;
+// }
+
+if (document.domain === "localhost" && document.location.port === "5000") {
   urlPrefix = localhost;
 }
 

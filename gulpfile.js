@@ -241,10 +241,10 @@ gulp.task('index', [
   var s = gulp.src('index.html');
   var basepath = prepPathForTemplate(destRootRest);
   var basepath_visbundle = basepath;
-  var d3Filename = 'd3.min.js',
+  var d3Filename = 'd3.min.js';
   if (devMode) {
     d3Filename = 'd3.js';
-    basepath_visbundle = basepath_visbundle_dev,
+    basepath_visbundle = basepath_visbundle_dev;
   }
   s = s.pipe(template({
     basepath: basepath, // proxy through server (cached by cloudflare, and easier than choosing a bucket for preprod, etc)
@@ -252,10 +252,10 @@ gulp.task('index', [
     d3Filename: d3Filename,
     useIntercom: !isTrue(process.env.DISABLE_INTERCOM),
     versionString: versionString,
-    facebook-app-id: process.env.FACEBOOK_APP_ID,
-    google-analytics-ua: process.env.GOOGLE_ANALYTICS_UA,
+    facebook_app_id: process.env.FACEBOOK_APP_ID,
+    google_analytics_ua: process.env.GOOGLE_ANALYTICS_UA,
     base_server_url: process.env.BASE_SERVER_URL,
-    site_name: process.env.SITE_NAME,
+    site_name: process.env.SITE_NAME
   }));
   return s.pipe(gulp.dest(destRootBase));
 });

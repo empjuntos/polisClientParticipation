@@ -8,7 +8,6 @@ var PostMessageUtils = require("../util/postMessageUtils");
 var preloadHelper = require("../util/preloadHelper");
 var Utils = require("../util/utils");
 var Net = require("../util/net");
-vat Url = require("../util/url.js");
 
 var PTPOI_BID_OFFSET = 1e10;
 
@@ -1130,11 +1129,11 @@ module.exports = function(params) {
   }
 
   function shareConversationOnTwitter() {
-    window.open("https://twitter.com/intent/tweet?text=Join the conversation!&url=" + Url.urlPrefix + conversation_id);
+    window.open("https://twitter.com/intent/tweet?text=Join the conversation!&url=https://pol.is/" + conversation_id);
   }
 
   function shareConversationOnFacebook() {
-    window.open("http://www.facebook.com/sharer/sharer.php?u=" + Url.urlPrefix + conversation_id);
+    window.open("http://www.facebook.com/sharer/sharer.php?u=https://pol.is/" + conversation_id);
   }
 
 

@@ -23,9 +23,10 @@ if (document.domain.indexOf("embed") >= 0) {
 if (document.domain.indexOf("survey") >= 0) {
   urlPrefix = survey;
 }
-// if ((-1 === document.domain.indexOf("pol.is")) && (-1 === document.domain.indexOf("polis.io"))) {
-//   urlPrefix = localhost;
-// }
+
+if (document.domain === "localhost" && document.location.port === "5000") {
+  urlPrefix = localhost;
+}
 
 if (document.domain === "localhost" && document.location.port === "8000") {
   urlPrefix = localhost8000;

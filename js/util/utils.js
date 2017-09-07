@@ -327,7 +327,9 @@ function userCanSeeSubscribePrompt() {
 }
 
 function ownerCanDisableBranding() {
-  return window.preload.firstConv.plan >= 99;
+  //[TODO] Create a mechanism to disable/enable paid plans
+  //return window.preload.firstConv.plan >= 99;
+  return true;
 }
 
 function getXid() {

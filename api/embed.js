@@ -3,7 +3,7 @@
   var firstRun = !window.polis._hasRun;
   polis._hasRun = 1;
   var iframes = [];
-  var polisUrl = "https://polis.brasilqueopovoquer.org.br";
+  var polisUrl = "http://localhost:5000";
   var maxHeightsSeen = {};
 
   polis.on = polis.on || {};

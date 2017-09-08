@@ -196,7 +196,7 @@ module.exports = ConversationView.extend({
     ctx.no_voting = !Utils.userCanVote() || !ctx.is_active;
     ctx.no_topic = !Utils.userCanSeeTopic();
     ctx.no_description = !Utils.userCanSeeDescription();
-    ctx.no_footer = !Utils.userCanSeeFooter();
+    ctx.footer = Utils.userCanSeeFooter();
 
     ctx.help_bgcolor = ctx.help_bgcolor || "#CAEAFF";
     ctx.help_color = ctx.help_color || "#3498DB";

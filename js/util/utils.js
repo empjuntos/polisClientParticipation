@@ -294,10 +294,8 @@ function userCanSeeVis() {
 function userCanSeeFooter() {
   var params = parseQueryParams(window.location.search);
   var ucsf = params.ucsf;
-  ucsf = (ucsf === "true" || ucsf === "1" || _.isUndefined(ucsf));
-  if (!ucsf && !ownerCanDisableBranding()) {
-    ucsf = true;
-  }
+  ucsf = (ucsf === "true" || ucsf === "1");
+  ucsf = (!ucsf && !ownerCanDisableBranding());
   return ucsf;
 }
 

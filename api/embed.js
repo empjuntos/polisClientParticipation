@@ -3,14 +3,27 @@
   var firstRun = !window.polis._hasRun;
   polis._hasRun = 1;
   var iframes = [];
-  var polisUrl = "http://localhost:5000";
   var maxHeightsSeen = {};
+  var availableDomains = {
+    prod: "https://polis.brasilqueopovoquer.org.br/",
+    dev: "https://devpolis.brasilqueopovoquer.org.br/",
+    local: "http://localhost:5000/"
+  };
 
   polis.on = polis.on || {};
   polis.on.vote = polis.on.vote || [];
   polis.on.doneVoting = polis.on.doneVoting || [];
   polis.on.write = polis.on.write || [];
   polis.on.resize = polis.on.resize || [];
+
+  var polisUrl = availableDomains.prod;
+  console.log(document.domain);
+  Object.keys(availableDomains).forEach( function(key){
+    if(document.domain.match(new RegExp(availableDomains[key].replace(
+      /[\w]+:\/\/([\w.]+)[\W].*/, "$1")))){
+      polisUrl = availableDomains[key];
+    }
+  });
 
   function getConfig(d) {
      return {
@@ -86,7 +99,7 @@
       alert("Error: need data-conversation_id or data-site_id");
       return;
     }
-    var src = polisUrl+ "/" + path.join("/");
+    var src = polisUrl + path.join("/");
     var paramStrings = [];
 
     function appendIfPresent(name) {
@@ -191,7 +204,7 @@
 
       if (data === "cookieRedirect" && cookiesEnabledAtTopLevel()) {
         // temporarily redirect to polis, which will set a cookie and redirect back
-        window.location = polisUrl + "/api/v3/launchPrep?dest=" + encodeReturnUrl(window.location+"");
+        window.location = polisUrl + "api/v3/launchPrep?dest=" + encodeReturnUrl(window.location+"");
       }
       // if (data === "twitterConnectBegin") {
       //   // open a new window where the twitter auth screen will show.

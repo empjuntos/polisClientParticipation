@@ -179,10 +179,6 @@
 
     window.addEventListener("message", function(event) {
       var data = event.data||{};
-      var domain = event.origin.replace(/^https?:\/\//,'');
-      if (!domain.match(/(^|\.)pol.is$/)) {
-        return;
-      }
 
       var cbList = polis.on[data.name]||[];
       var cbResults = [];

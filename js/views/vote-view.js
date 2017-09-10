@@ -12,6 +12,10 @@ var Strings = require("../strings");
 
 var iOS = Utils.isIos();
 
+// Following dependencies required for signup info to be sent
+var Net = require("../util/net");
+var polisPost = Net.polisPost;
+
 module.exports = Handlebones.ModelView.extend({
   name: "vote-view",
   template: template,
@@ -29,6 +33,7 @@ module.exports = Handlebones.ModelView.extend({
 
     "click #facebookButtonVoteView" : "facebookClicked",
     "click #twitterButtonVoteView" : "twitterClicked",
+    "click #signUpButtonVoteView" : "signUpClicked",
 
   },
   context: function() {
@@ -136,6 +141,21 @@ module.exports = Handlebones.ModelView.extend({
     // that window will redirect back to a simple page that calls window.opener.twitterStatus("ok")
     var params = 'location=0,status=0,width=800,height=400';
     window.open(document.location.origin + "/api/v3/twitterBtn?owner=false&dest=/twitterAuthReturn/VoteView", 'twitterWindow', params);
+  },
+  
+  // Callback for the signup form
+  signUpClicked: function(e) {
+    e.preventDefault();
+    polisPost("api/v3/auth/new", {
+      email: this.$('input[id="signup-email"]').val(),
+      gatekeeperTosPrivacy: true,
+      hname:this.$('input[id="signup-name"]').val(),
+      password: this.$('input[id="signup-password"]').val(),
+    }).then(function() {
+      this.onAuthSuccess();
+    }, function(err) {
+      console.error("failed to upload signup data :(");
+    });
   },
 
   spamToggle: function() {

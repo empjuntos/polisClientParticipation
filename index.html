@@ -214,16 +214,42 @@ if (typeof x_name !== "undefined") {
   qp.push("x_name=" + x_name);
 }
 
-var qp = qp.join("&");
-qp = qp.length > 1 ? ("?" + qp) : "";
+// var qp = qp.join("&");
+// qp = qp.length > 1 ? ("?" + qp) : "";
 
+ajaxGet("/api/v3/users",
+  function(response) {
 
+    var qp = [];
+    if (p.conversation && p.conversation.conversation_id) {
+      qp.push("conversation_id=" + p.conversation.conversation_id);
+    }
+    qp.push("pid=mypid");
 
+    if (response.uid !== undefined) {
+      var xid = response.uid.toString();
+      qp.push("xid=" + xid);
+      window.preload.xid = xid;
 
-ajaxGet("/api/v3/participationInit" + qp,
-  onPreloadOk,
+      qp.push("x_name=" + response.hname);
+      window.preload.x_name = response.hname;
+
+      qp.push("x_profile_image_url=" + "");
+      window.preload.x_profile_image_url = "";
+    }
+
+    var qp = qp.join("&");
+    qp = qp.length > 1 ? ("?" + qp) : "";
+
+    ajaxGet("/api/v3/participationInit" + qp,
+      onPreloadOk,
+      onPreloadFail);
+  },
   onPreloadFail);
 
+// ajaxGet("/api/v3/participationInit" + qp,
+//   onPreloadOk,
+//   onPreloadFail);
 
 }());
 </script>

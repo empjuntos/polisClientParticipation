@@ -14,6 +14,10 @@ var serialize = require("../util/serialize");
 var Strings = require("../strings");
 var Utils = require("../util/utils");
 
+// Following dependencies required for signup info to be sent
+var Net = require("../util/net");
+var polisPost = Net.polisPost;
+
 var CHARACTER_LIMIT = constants.CHARACTER_LIMIT;
 
 // var CommentsByMeView = Handlebones.CollectionView.extend({
@@ -42,6 +46,7 @@ module.exports = Handlebones.ModelView.extend({
     ctx.shouldAutofocusOnTextarea = this.shouldAutofocusOnTextarea || Utils.shouldFocusOnTextareaWhenWritePaneShown();
     ctx.hasTwitter = userObject.hasTwitter;
     ctx.hasFacebook = userObject.hasFacebook;
+    ctx.hasSocial = window.userObject.hasFacebook || window.userObject.hasTwitter || window.preload.xid;
     ctx.s = Strings;
     ctx.desktop = !display.xs();
 
@@ -166,6 +171,8 @@ module.exports = Handlebones.ModelView.extend({
     "click #facebookButtonCommentForm" : "facebookClicked",
     "click #twitterButtonCommentForm" : "twitterClicked",
     "click #comment_button": "onSubmitClicked",
+    "click #signUpButtonVoteView" : "signUpClicked",
+    "click #signInButtonVoteView" : "signInClicked",
   },
   onSubmitClicked: function(e) {
     e.preventDefault();
@@ -190,7 +197,7 @@ module.exports = Handlebones.ModelView.extend({
       }
     }
 
-    var hasSocial = window.userObject.hasFacebook || window.userObject.hasTwitter;
+    var hasSocial = window.userObject.hasFacebook || window.userObject.hasTwitter || window.preload.xid;
     var needsSocial = preload.firstConv.auth_needed_to_write;
     M.add(M.COMMENT_SUBMIT_CLICK);
     if (hasSocial || !needsSocial) {
@@ -242,6 +249,50 @@ module.exports = Handlebones.ModelView.extend({
     var params = 'location=0,status=0,width=800,height=400';
     window.open(document.location.origin + "/api/v3/twitterBtn?owner=false&dest=/twitterAuthReturn/CommentForm", 'twitterWindow', params);
   },
+
+  // Action for the signup form
+  signUpClicked: function(e) {
+    var that = this;
+    e.preventDefault();
+    var email = this.$('input[id="signup-email"]').val();
+    var password = this.$('input[id="signup-password"]').val();
+    polisPost("api/v3/auth/new", {
+      email: this.$('input[id="signup-email"]').val(),
+      gatekeeperTosPrivacy: true,
+      hname: this.$('input[id="signup-name"]').val(),
+      password: this.$('input[id="signup-password"]').val(),
+    }).then(function() {
+      polisPost("api/v3/auth/login", {
+        password: password,
+        email: email,
+      }).then(function() {
+        setTimeout(function() {
+          that.onAuthSuccess();
+        }, 100);
+      });
+    }, function(err) {
+      console.error("Signup Error: ");
+      console.error(err);
+    });
+  },
+
+  // Action for the signin form
+  signInClicked: function(e) {
+    var that = this;
+    e.preventDefault();
+    polisPost("api/v3/auth/login", {
+      email: this.$('input[id="signin-email"]').val(),
+      password: this.$('input[id="signin-password"]').val(),
+    }).then(function() {
+      setTimeout(function() {
+        that.onAuthSuccess();
+      }, 100);
+    }, function(err) {
+      console.error("Signin Error: ");
+      console.error(err);
+    });
+  },
+
   showSocialAuthChoices: function() {
     $("#comment_form_controls").hide();
     $("#socialButtonsCommentForm").show();

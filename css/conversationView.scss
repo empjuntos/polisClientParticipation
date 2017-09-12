@@ -235,6 +235,22 @@ img {
   padding: 10px 0px; // no horizontal padding - to prevent the right edge of "disagree" from being clipped on iOS
 }
 
+// ****************
+// Styles for signup form
+// ****************
+.signup-alternate {
+
+}
+
+.signup-or {
+  text-align: center;
+  font-size: 36px;
+}
+
+.polis-signup {
+  
+}
+
 .tab-conv {
   // set this independently of the overall font size, since they're difficult to get right.
   font-size: 16px;

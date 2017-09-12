@@ -56,31 +56,90 @@
         display: none;
         margin-top: 10px;
         ">
-      <div class="protip"><p><i class="fa fa-microphone"></i>&nbsp; {{s.connectToPostPrompt}}</p></div>
-      {{#unless hasFacebook}}
-        <button id="facebookButtonCommentForm" class="facebookButton" style="padding-top: 0px;" tabindex=203>
-          <i class="svgIcon" style="
-            display: inline-block;
-            position: relative;
-            margin-right: 2px;
-            top: 6px;
-            width: 25px;
-            fill: white;
-          ">{{> iconFaFacebookSquare25}}</i>
-          {{s.connectFacebook}}</button>
-      {{/unless}}
-      {{#unless hasTwitter}}
-        <button id="twitterButtonCommentForm" class="twitterButton" style="padding-top: 0px;" tabindex=204>
-        <i class="svgIcon" style="
-          display: inline-block;
-          position: relative;
-          margin-right: 2px;
-          top: 8px;
-          width: 25px;
-          fill: white;
-        ">{{> iconFaTwitter25}}</i>
-          {{s.connectTwitter}}</button>
-      {{/unless}}
+
+        <div class="signup-alternate">
+          <div class="polis-signup">
+
+            <div style="display:flex;-webkit-flex-direction:column;-webkit-flex-wrap:nowrap;-webkit-justify-content:center;-webkit-align-items:center;-webkit-align-content:stretch;-webkit-order:0;-webkit-flex-grow:0;-webkit-flex-shrink:1;-webkit-flex-basis:auto;-webkit-align-self:auto;">
+
+              <div style="position:relative;z-index:10;padding:20px;-webkit-border-radius:3px;color:rgb(130,130,130);">
+                <p style="font-size:26px;display:block;margin-bottom:20px;margin-top:0;">
+                  <span name="sign-in" class="fa fa-sign-in"></span>
+                  <span> Já possuo uma conta</span>
+                </p>
+                <div>
+                  <form>
+                    <input style="display:block;margin:10px 0px;color:rgb(100,100,100);font-size:14px;padding:7px;-webkit-border-radius:3px;border:1px solid rgb(130,130,130);"
+                    placeholder="email" type="email" id="signin-email">
+                    <input style="display:block;margin:10px 0px;color:rgb(100,100,100);font-size:14px;padding:7px;-webkit-border-radius:3px;border:1px solid rgb(130,130,130);"
+                    placeholder="password" type="password" id="signin-password">
+                    <span></span>
+                    <button id="signInButtonVoteView" style="font-size:16px;background-color:#03a9f4;color:white;border:0;-webkit-border-radius:0.3em;padding:0.8em 1.5em;cursor:pointer;outline:none;display:block;">Entrar</button>
+                  </form>
+                </div>
+                <div id="socialButtonsVoteView"
+                  style="
+                    {{!-- display: none; --}}
+                    margin: 10px;
+                    ">
+                  <div class="protip"><p><i class="fa fa-microphone"></i>&nbsp; {{s.connectToVotePrompt}}</p></div>
+                  {{#unless hasFacebook}}
+                    <button id="facebookButtonVoteView" class="facebookButton" style="padding-top: 0px; margin-bottom: 4px;">
+                      <i class="svgIcon" style="
+                        display: inline-block;
+                        position: relative;
+                        margin-right: 2px;
+                        top: 6px;
+                        width: 25px;
+                        fill: white;
+                      ">{{> iconFaFacebookSquare25}}</i>
+                      {{s.connectFacebook}}</button>
+                  {{/unless}}
+                  {{#unless hasTwitter}}
+                    <button id="twitterButtonVoteView" class="twitterButton" style="padding-top: 0px; margin-bottom: 4px;">
+                    <i class="svgIcon" style="
+                      display: inline-block;
+                      position: relative;
+                      margin-right: 2px;
+                      top: 8px;
+                      width: 25px;
+                      fill: white;
+                    ">{{> iconFaTwitter25}}</i>
+                      {{s.connectTwitter}}</button>
+                  {{/unless}}
+                </div>
+              </div>
+
+              <div class="signup-or">OU</div>
+
+              <div style="position:relative;z-index:10;padding:20px;-webkit-border-radius:3px;color:rgb(130,130,130);">
+                <p style="font-size:26px;display:block;margin-bottom:20px;margin-top:0;" >
+                  <span name="sign-in" class="fa fa-sign-in"></span><span> Criar uma conta</span>
+                </p>
+                <div>
+                  <form>
+                    <input style="display:block;margin:10px 0px;color:rgb(100,100,100);font-size:14px;padding:7px;-webkit-border-radius:3px;border:1px solid rgb(130,130,130);"
+                      placeholder="name" type="text" id="signup-name">
+                    <input style="display:block;margin:10px 0px;color:rgb(100,100,100);font-size:14px;padding:7px;-webkit-border-radius:3px;border:1px solid rgb(130,130,130);"
+                      placeholder="email" type="email" id="signup-email">
+                    <input style="display:block;margin:10px 0px;color:rgb(100,100,100);font-size:14px;padding:7px;-webkit-border-radius:3px;border:1px solid rgb(130,130,130);"
+                      placeholder="password" type="password" id="signup-password">
+                    <input style="display:block;margin:10px 0px;color:rgb(100,100,100);font-size:14px;padding:7px;-webkit-border-radius:3px;border:1px solid rgb(130,130,130);"
+                      placeholder="repeat password" type="password" id="signup-rpassword"><span></span>
+                    <div style="margin-top:20px;margin-bottom:20px;">
+                      <p style="font-size:12px;max-width:400px;font-weight:300;line-height:1.3;color:rgb(130,130,130);"><span>Eu concordo com os </span><a href="https://brasilqueopovoquer.org.br/termos-de-uso/"
+                          style="color:rgb(130,130,130);text-decoration:underline;">termos do Brasil que o povo quer</a><span>.</span>
+                      </p>
+                    </div><button id="signUpButtonVoteView" style="font-size: 16px; background-color: rgb(3, 169, 244); color: white; border: 0px; border-radius: 0.3em; padding: 0.8em 1.5em; cursor: pointer; outline: none; display: block;">Crear conta</button>
+                  </form>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
     </div>
 
     {{!-- ================ LOWER CONTAINER ================ --}}

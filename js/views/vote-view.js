@@ -314,6 +314,10 @@ module.exports = Handlebones.ModelView.extend({
         that.model.set({
           needSocial: true,
         });
+      } else if (err && err.responseText === "polis_err_auth_token_not_supplied") {
+        that.model.set({
+          needSocial: true,
+      });
       } else {
         alert("Apologies, your vote failed to send. Please check your connection and try again.");
       }

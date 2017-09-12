@@ -214,10 +214,10 @@ if (typeof x_name !== "undefined") {
   qp.push("x_name=" + x_name);
 }
 
-// var qp = qp.join("&");
-// qp = qp.length > 1 ? ("?" + qp) : "";
+var qp = qp.join("&");
+qp = qp.length > 1 ? ("?" + qp) : "";
 
-ajaxGet("/api/v3/users",
+ajaxGet("/api/v3/users?errIfNoAuth=true",
   function(response) {
 
     var qp = [];
@@ -245,7 +245,12 @@ ajaxGet("/api/v3/users",
       onPreloadOk,
       onPreloadFail);
   },
-  onPreloadFail);
+  function(err){
+    console.log(err);
+    ajaxGet("/api/v3/participationInit" + qp,
+      onPreloadOk,
+      onPreloadFail);
+  });
 
 // ajaxGet("/api/v3/participationInit" + qp,
 //   onPreloadOk,

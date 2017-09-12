@@ -388,7 +388,7 @@ module.exports = function(params) {
     var promise = polisPost(votesPath, $.extend({}, params, {
       pid: "mypid",
       conversation_id: conversation_id,
-      agid: 1,
+      agid: 0,
     }));
     promise.then(function(response) {
       // PID_FLOW

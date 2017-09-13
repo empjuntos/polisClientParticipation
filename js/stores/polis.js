@@ -15,6 +15,7 @@ var PTPOI_BID_OFFSET = 1e10;
 var polisPost = Net.polisPost;
 var polisGet = Net.polisGet;
 
+var agid = window.preload.xid ? 1 : 0;
 
 module.exports = function(params) {
 
@@ -318,7 +319,7 @@ module.exports = function(params) {
     model = $.extend(model, {
       // server will find the pid
       conversation_id: conversation_id,
-      agid: 1,
+      agid: agid,
     });
 
     if (typeof model.txt !== "string" || model.txt.length === 0) {
@@ -388,7 +389,7 @@ module.exports = function(params) {
     var promise = polisPost(votesPath, $.extend({}, params, {
       pid: "mypid",
       conversation_id: conversation_id,
-      agid: 0,
+      agid: agid,
     }));
     promise.then(function(response) {
       // PID_FLOW

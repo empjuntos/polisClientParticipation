@@ -144,6 +144,8 @@
 
     iframe.src = src;
     iframe.width = "100%"; // may be constrained by parent div
+    iframe.style["min-width"] = "100%";
+    iframe.scrolling = "no";
     iframe.height = o.height || 930;
     iframe.style.border = o.border || "1px solid #ccc";
     iframe.style.borderRadius = o.border_radius || "4px";
@@ -229,6 +231,10 @@
             // Prevents resize loops and excessive scrollbar flashing by only allowing iframe to expand.
             maxHeightsSeen[frameId] = h;
             iframe.setAttribute("height", h);
+            iframe.style["min-width"] = "100%";
+            iframe.setAttribute("width", "1px");
+            iframe.setAttribute("scrolling", "no");
+
           }
         }
       }

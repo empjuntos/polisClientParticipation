@@ -319,7 +319,7 @@ module.exports = Handlebones.ModelView.extend({
           needSocial: true,
       });
       } else {
-        alert("Apologies, your vote failed to send. Please check your connection and try again.");
+        alert("Desculpe, mas houve uma falha no envio do seu voto. Por favor verifique sua conexão e tente novamente.");
       }
     }
 

@@ -301,6 +301,18 @@ module.exports = Handlebones.ModelView.extend({
       });
     }
 
+    function pushtogetherLogin() {
+      options = {};
+      options.windowName = options.windowName || 'ConnectWithOAuth'; // should not include space for IE
+      options.windowOptions = options.windowOptions || 'location=0,status=0,width=800,height=400';
+
+      // Uncomment above line for dev enviroment with EJ.
+      // options.path = 'http://localhost:8000/users/signin/';
+      options.path = 'https://ej.brasilqueopovoquer.org.br/users/signin/';
+      var that = this;
+      that._oauthWindow = window.open(options.path, options.windowName, options.windowOptions);
+    }
+
     function onFail(err) {
       this.animateIn();
       console.error(err);
@@ -311,13 +323,15 @@ module.exports = Handlebones.ModelView.extend({
       } else if (err && err.responseText === "polis_err_conversation_is_closed") {
         alert("This conversation is closed. No further voting is allowed.");
       } else if (err && err.responseText === "polis_err_post_votes_social_needed") {
-        that.model.set({
-          needSocial: true,
-        });
+        pushtogetherLogin();
+        // that.model.set({
+        //   needSocial: true,
+        // });
       } else if (err && err.responseText === "polis_err_auth_token_not_supplied") {
-        that.model.set({
-          needSocial: true,
-      });
+        pushtogetherLogin();
+      //   that.model.set({
+      //     needSocial: true,
+      // });
       } else {
         alert("Desculpe, mas houve uma falha no envio do seu voto. Por favor verifique sua conexão e tente novamente.");
       }

@@ -214,47 +214,28 @@ if (typeof x_name !== "undefined") {
   qp.push("x_name=" + x_name);
 }
 
+var x_name = get_x_name();
+if (typeof x_name !== "undefined") {
+  window.preload.x_name = x_name;
+  qp.push("x_name=" + x_name);
+}
+
+function get_user_is_authenticated() {
+  var params = parseQueryParams(window.location.search);
+  return params.user_is_authenticated;
+}
+
+var user_is_authenticated = get_user_is_authenticated();
+if (typeof user_is_authenticated !== "undefined") {
+  window.preload.user_is_authenticated = user_is_authenticated;
+}
+
 var qp = qp.join("&");
 qp = qp.length > 1 ? ("?" + qp) : "";
 
-ajaxGet("/api/v3/users?errIfNoAuth=true",
-  function(response) {
-
-    var qp = [];
-    if (p.conversation && p.conversation.conversation_id) {
-      qp.push("conversation_id=" + p.conversation.conversation_id);
-    }
-    qp.push("pid=mypid");
-
-    if (response.uid !== undefined) {
-      var xid = response.uid.toString();
-      qp.push("xid=" + xid);
-      window.preload.xid = xid;
-
-      qp.push("x_name=" + response.hname);
-      window.preload.x_name = response.hname;
-
-      qp.push("x_profile_image_url=" + "");
-      window.preload.x_profile_image_url = "";
-    }
-
-    var qp = qp.join("&");
-    qp = qp.length > 1 ? ("?" + qp) : "";
-
-    ajaxGet("/api/v3/participationInit" + qp,
-      onPreloadOk,
-      onPreloadFail);
-  },
-  function(err){
-    console.log(err);
-    ajaxGet("/api/v3/participationInit" + qp,
-      onPreloadOk,
-      onPreloadFail);
-  });
-
-// ajaxGet("/api/v3/participationInit" + qp,
-//   onPreloadOk,
-//   onPreloadFail);
+ ajaxGet("/api/v3/participationInit" + qp,
+   onPreloadOk,
+   onPreloadFail);
 
 }());
 </script>

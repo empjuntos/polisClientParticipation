@@ -15,7 +15,11 @@ var PTPOI_BID_OFFSET = 1e10;
 var polisPost = Net.polisPost;
 var polisGet = Net.polisGet;
 
-var agid = window.preload.xid ? 1 : 0;
+var agid = 1;
+
+if (window.preload.xid === undefined) {
+  agid = 0;
+}
 
 module.exports = function(params) {
 

@@ -197,6 +197,13 @@ module.exports = Handlebones.ModelView.extend({
       }
     }
 
+    function pushtogetherLoginEmbeded() {
+
+      $("#comment_form_controls").hide();
+      $("#socialButtonsUnderReadReact").hide();
+      window.parent.postMessage('askForLogin', '*');
+    }
+
     var hasSocial = window.userObject.hasFacebook || window.userObject.hasTwitter || window.preload.xid;
     var needsSocial = preload.firstConv.auth_needed_to_write;
     M.add(M.COMMENT_SUBMIT_CLICK);
@@ -205,7 +212,8 @@ module.exports = Handlebones.ModelView.extend({
       doSubmitComment();
     } else {
       M.add(M.COMMENT_SUBMIT_SOCIAL_NEEDED);
-      this.showSocialAuthChoices();
+      pushtogetherLoginEmbeded();
+      // this.showSocialAuthChoices();
     }
   },
   onAuthSuccess: function() {

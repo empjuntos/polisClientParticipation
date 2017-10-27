@@ -469,7 +469,7 @@ gulp.task('scripts', ['templates', 'jshint'], function() {
             exports: null,
           },
           owl: {
-            path: 'bower_components/owl.carousel/owl-carousel/owl.carousel.min.js',
+            path: 'bower_components/owl.carousel/src/js/owl.carousel.js',
             depends: { jquery: "jQuery" },
             exports: null,
           },

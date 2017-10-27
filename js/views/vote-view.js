@@ -312,7 +312,7 @@ module.exports = Handlebones.ModelView.extend({
         alert("This conversation is closed. No further voting is allowed.");
       } else if (err && err.responseText === "polis_err_post_votes_social_needed") {
         // show push together login modal
-        window.parent.postMessage('askForLogin', '*')
+        window.parent.postMessage('askForLogin', '*');
         // that.model.set({
         //   needSocial: true,
         // });

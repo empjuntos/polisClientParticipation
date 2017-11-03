@@ -338,6 +338,7 @@ module.exports = function(params) {
       if (!_.isUndefined(response.currentPid)) {
         processPidResponse(response.currentPid);
       }
+      return response;
     });
   }
 

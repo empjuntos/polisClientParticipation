@@ -312,13 +312,13 @@ module.exports = Handlebones.ModelView.extend({
         alert("This conversation is closed. No further voting is allowed.");
       } else if (err && err.responseText === "polis_err_post_votes_social_needed") {
         // show push together login modal
-        window.parent.postMessage('askForLogin', '*')
+        window.top.postMessage('askForLogin', '*');
         // that.model.set({
         //   needSocial: true,
         // });
       } else if (err && err.responseText === "polis_err_auth_token_not_supplied") {
         // show push together login modal
-        window.parent.postMessage('askForLogin', '*');
+        window.top.postMessage('askForLogin', '*');
       //   that.model.set({
       //     needSocial: true,
       // });
@@ -436,6 +436,7 @@ module.exports = Handlebones.ModelView.extend({
       return false;
     };
     this.participantAgreed = function(e) {
+      var that = this;
       this.mostRecentVoteType = "agree";
       var tid = this.model.get("tid");
       var starred = this.model.get("starred");
@@ -450,9 +451,13 @@ module.exports = Handlebones.ModelView.extend({
       serverClient.addToVotesByMe(this.wipVote);
       this.onButtonClicked();
       serverClient.agree(tid, starred)
-        .then(onVote.bind(this), onFail.bind(this));
+        .then(onVote.bind(this), onFail.bind(this))
+        .then(function (){
+          window.top.postMessage(that.wipVote, '*');
+        });
     };
     this.participantDisagreed = function() {
+      var that = this;
       this.mostRecentVoteType = "disagree";
       var tid = this.model.get("tid");
       var starred = this.model.get("starred");
@@ -464,9 +469,13 @@ module.exports = Handlebones.ModelView.extend({
       serverClient.addToVotesByMe(this.wipVote);
       this.onButtonClicked();
       serverClient.disagree(tid, starred)
-        .then(onVote.bind(this), onFail.bind(this));
+        .then(onVote.bind(this), onFail.bind(this))
+        .then(function() {
+          window.top.postMessage(that.wipVote, '*');
+        });
     };
     this.participantPassed = function() {
+      var that = this;
       this.mostRecentVoteType = "pass";
       var tid = this.model.get("tid");
       var starred = this.model.get("starred");
@@ -478,7 +487,10 @@ module.exports = Handlebones.ModelView.extend({
       serverClient.addToVotesByMe(this.wipVote);
       this.onButtonClicked();
       serverClient.pass(tid, starred)
-        .then(onVote.bind(this), onFail.bind(this));
+        .then(onVote.bind(this), onFail.bind(this))
+        .then(function() {
+          window.top.postMessage(that.wipVote, '*');
+        });
     };
 
     this.participantModerated = function(e) {

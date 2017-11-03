@@ -201,7 +201,7 @@ module.exports = Handlebones.ModelView.extend({
 
       $("#comment_form_controls").hide();
       $("#socialButtonsUnderReadReact").hide();
-      window.parent.postMessage('askForLogin', '*');
+      window.top.postMessage('askForLogin', '*');
     }
 
     var hasSocial = window.userObject.hasFacebook || window.userObject.hasTwitter || window.preload.xid;
@@ -334,7 +334,9 @@ module.exports = Handlebones.ModelView.extend({
     if (!promise) {
       return reject();
     } else {
-      promise.then(function() {
+      promise.then(function(response) {
+        attrs.tid = response.tid;
+        window.top.postMessage(attrs, '*');
         that.trigger("commentSubmitted"); // view.trigger
         // $("#comment_form_textarea").hide();
         // $("#commentSentAlert").fadeIn(300);

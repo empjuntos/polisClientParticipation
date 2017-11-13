@@ -22,7 +22,7 @@ function getPolisFrameId() {
 
 function postResizeEvent(newHeight) {
   console.log('postResizeEvent', newHeight);
-  window.top.postMessage({
+  window.parent.postMessage({
     name: "resize",
     polisFrameId: getPolisFrameId(),
     height: newHeight,
